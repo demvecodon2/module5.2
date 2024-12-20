@@ -43,7 +43,7 @@ function StudentList() {
             try {
                 await deleteStudentById(id);
                 toast.success(`Xóa học sinh ${name} thành công!`);
-                fetchStudents(); // Refresh the student list after deletion
+                fetchStudents();
             } catch (error) {
                 console.error('Lỗi khi xóa học sinh:', error);
                 if (error.response && error.response.status === 404) {
