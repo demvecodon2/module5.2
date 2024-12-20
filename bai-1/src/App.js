@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-do
 import StudentList from './components/student/ListComponent';
 import AddStudent from './components/student/AddStudent';
 import StudentDetail from './components/student/StudentDetail';
+import UpdateStudent from './components/student/UpdateStudent';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
 function App() {
     return (
-        <Router>
+
             <div>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     <div className="container-fluid">
@@ -31,10 +32,10 @@ function App() {
                         <Route path="/" element={<StudentList />} />
                         <Route path="/add" element={<AddStudent />} />
                         <Route path="/detail/:id" element={<StudentDetail />} />
+                        <Route path="/edit/:id" element={<UpdateStudent />} />
                     </Routes>
                 </div>
             </div>
-        </Router>
     );
 }
 

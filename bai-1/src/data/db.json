@@ -1,0 +1,74 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "name": "Tùng",
+      "age": 22,
+      "address": "Hà Nội",
+      "email": "tung@gmail.com",
+      "classes": {
+        "id": 1,
+        "name": "Class 1"
+      },
+      "classId": "1"
+    },
+    {
+      "id": 2,
+      "name": "Thảo",
+      "age": 21,
+      "address": "Hà Nội",
+      "email": "thao@gmail.com",
+      "classes": {
+        "id": 2,
+        "name": "Class 2"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Hưng",
+      "age": 20,
+      "address": "Quảng Nam",
+      "email": "hung@gmail.com",
+      "classes": {
+        "id": 1,
+        "name": "Class 1"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Tuyết",
+      "age": 23,
+      "address": "Quảng Bình",
+      "email": "tuyet@gmail.com",
+      "classes": {
+        "id": 2,
+        "name": "Class 2"
+      }
+    },
+    {
+      "id": 5,
+      "name": "1231121",
+      "age": 12,
+      "address": "Đà Nẵng",
+      "email": "1123@gmail.com",
+      "classes": {
+        "id": 2,
+        "name": "Class 2"
+      }
+    }
+  ],
+  "classes": [
+    {
+      "id": "1",
+      "name": "Class 1"
+    },
+    {
+      "id": "2",
+      "name": "Class 2"
+    },
+    {
+      "id": "3",
+      "name": "Class 3"
+    }
+  ]
+}

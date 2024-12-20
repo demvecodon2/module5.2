@@ -1,36 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { addStudent } from '../service/studentService';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 function AddStudent() {
+    const [classes, setClasses] = useState([]);
+    useEffect(() => {
+        axios.get('http://localhost:3000/classes')
+            .then(response => setClasses(response.data))
+            .catch(error => console.error('Lỗi khi lấy danh sách lớp:', error));
+    }, []);
+
     const formik = useFormik({
         initialValues: {
             name: '',
             age: '',
             address: '',
             email: '',
+            classes: '',
         },
         validationSchema: Yup.object({
-            name: Yup.string().required('Name is required'),
-            age: Yup.number().required('Age is required').min(1, 'Age must be at least 1'),
-            address: Yup.string().required('Address is required'),
-            email: Yup.string().required('Email is required').email('Invalid email'),
+            name: Yup.string().required('Tên là bắt buộc'),
+            age: Yup.number().required('Tuổi là bắt buộc').min(10, 'Tuổi phải ít nhất là 10')
+                .max(110,'tuổi ko quá 110'),
+            address: Yup.string().required('Địa chỉ là bắt buộc'),
+            email: Yup.string().required('Email là bắt buộc').email('Email không hợp lệ'),
+            classes: Yup.string().required('Lớp là bắt buộc'),
         }),
-        onSubmit: (values) => {
-            addStudent(values);
-            toast.success('Student added successfully!');
-            formik.resetForm();
+        onSubmit: async (values) => {
+            try {
+                const selectedClass = classes.find(cls => cls.id === values.classes);
+                const studentData = {
+                    ...values,
+                    classes: selectedClass || { id: '', name: 'Chưa xác định' }
+                };
+                await addStudent(studentData);
+                toast.success('Thêm sinh viên thành công!');
+                formik.resetForm();
+            } catch (error) {
+                console.error('Error adding student:', error);
+                toast.error('Lỗi khi thêm sinh viên');
+            }
         },
     });
 
     return (
         <div>
-            <h1 className="text-center">Add Student</h1>
+            <h1 className="text-center">Thêm Sinh Viên</h1>
             <form onSubmit={formik.handleSubmit} className="w-50 mx-auto">
                 <div className="mb-3">
-                    <label className="form-label">Name</label>
+                    <label className="form-label">Tên</label>
                     <input
                         type="text"
                         className={`form-control ${formik.errors.name && 'is-invalid'}`}
@@ -41,7 +62,7 @@ function AddStudent() {
                     {formik.errors.name && <div className="invalid-feedback">{formik.errors.name}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Age</label>
+                    <label className="form-label">Tuổi</label>
                     <input
                         type="number"
                         className={`form-control ${formik.errors.age && 'is-invalid'}`}
@@ -52,7 +73,7 @@ function AddStudent() {
                     {formik.errors.age && <div className="invalid-feedback">{formik.errors.age}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Address</label>
+                    <label className="form-label">Địa chỉ</label>
                     <input
                         type="text"
                         className={`form-control ${formik.errors.address && 'is-invalid'}`}
@@ -73,7 +94,24 @@ function AddStudent() {
                     />
                     {formik.errors.email && <div className="invalid-feedback">{formik.errors.email}</div>}
                 </div>
-                <button type="submit" className="btn btn-success w-100">Add Student</button>
+                <div className="mb-3">
+                    <label className="form-label">Lớp</label>
+                    <select
+                        className={`form-control ${formik.errors.classes && 'is-invalid'}`}
+                        name="classes"
+                        onChange={formik.handleChange}
+                        value={formik.values.classes}
+                    >
+                        <option value="">Chọn một lớp</option>
+                        {classes.map((cls) => (
+                            <option key={cls.id} value={cls.id}>
+                                {cls.name}
+                            </option>
+                        ))}
+                    </select>
+                    {formik.errors.classes && <div className="invalid-feedback">{formik.errors.classes}</div>}
+                </div>
+                <button type="submit" className="btn btn-success w-100">Thêm Sinh Viên</button>
             </form>
         </div>
     );
