@@ -1,13 +1,15 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {Link} from 'react-router-dom';
-import {getAllStudents, deleteStudentById, searchStudents} from '../service/studentService';
-import {toast} from 'react-toastify';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { getAllStudents, deleteStudentById, searchStudents } from '../service/studentService';
+import { toast } from 'react-toastify';
+import { useSelector } from "react-redux";
 
 function StudentList() {
+    const account = useSelector(state => state.user.account);
+
     const [students, setStudents] = useState([]);
     const [classes, setClasses] = useState([]);
     const [loading, setLoading] = useState(true);
-
 
     useEffect(() => {
         fetchStudents();
@@ -63,15 +65,11 @@ function StudentList() {
     const searchNameRef = useRef();
     const searchClassRef = useRef();
     const handleSearch = async () => {
-        console.log("------search by class:------------ ");
-
         const searchName = searchNameRef.current.value;
         const searchClass = searchClassRef.current.value;
         const filteredStudents = await searchStudents(searchName, searchClass);
         setStudents(filteredStudents);
-
     };
-
 
     if (loading) {
         return <div className="text-center">Loading...</div>;
@@ -80,7 +78,7 @@ function StudentList() {
     return (
         <div className="container mt-4">
             <h1 className="text-center mb-4">Student List</h1>
-            <Link to="/add" className="btn btn-success mb-3">Add New Student</Link>
+
             <div className="mb-3">
                 <strong>Tìm kiếm theo tên:</strong>
                 <input
@@ -103,7 +101,7 @@ function StudentList() {
                     ))}
                 </select>
             </div>
-            <button className="btn btn-primary mb-3" onClick={handleSearch}>Tìm 1kiếm</button>
+            <button className="btn btn-primary mb-3" onClick={handleSearch}>Tìm kiếm</button>
 
             <div className="table-responsive">
                 <table className="table table-bordered table-striped table-hover">
@@ -127,14 +125,16 @@ function StudentList() {
                                 <td>{student.age}</td>
                                 <td>{student.address}</td>
                                 <td>{student.email}</td>
-                                <td>{student.classes.name}</td>
+                                <td>{getClassName(student.classId)}</td>
                                 <td className="text-center">
                                     <Link to={`/detail/${student.id}`}
                                           className="btn btn-primary btn-sm me-2">View</Link>
                                     <Link to={`/edit/${student.id}`} className="btn btn-warning btn-sm me-2">Edit</Link>
-                                    <button className="btn btn-danger btn-sm" onClick={() =>
-                                        handleDelete(student.id, student.name)}>Delete
-                                    </button>
+                                    {account && account.role === 'admin' && (
+                                        <button className="btn btn-danger btn-sm" onClick={() =>
+                                            handleDelete(student.id, student.name)}>Delete
+                                        </button>
+                                    )}
                                 </td>
                             </tr>
                         ))

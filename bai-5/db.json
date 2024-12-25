@@ -1,0 +1,58 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "code": "PROD-00001",
+      "name": "panadol 500",
+      "genre": "thuốc hạ sốt",
+      "category": "thực phẩm chức năng",
+      "price": 10.99,
+      "quantity": 1000
+    },
+    {
+      "id": 2,
+      "code": "PROD-00002",
+      "name": "viagra 500mg",
+      "genre": "thuốc chữa bệnh",
+      "category": "thực phẩm chức năng",
+      "price": 20.99,
+      "quantity": 500
+    },
+    {
+      "id": 3,
+      "code": "PROD-00003",
+      "name": "aspirin 500mg",
+      "genre": "thuốc hạn chế dinh dưỡng",
+      "category": "dược phẩm",
+      "price": 15.99,
+      "quantity": 700
+    },
+    {
+      "code": "PROD-1113",
+      "name": "thuốc",
+      "genre": "thuốc điều trị bệnh",
+      "quality": 123,
+      "price": 123,
+      "input": "2024-12-25",
+      "id": 4
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "thực phẩm chức năng"
+    },
+    {
+      "id": 2,
+      "name": "dược phẩm"
+    },
+    {
+      "id": 3,
+      "name": "đồ uống"
+    },
+    {
+      "id": 4,
+      "name": "thuốc điều trị bệnh"
+    }
+  ]
+}
